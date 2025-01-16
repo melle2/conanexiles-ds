@@ -1,4 +1,4 @@
-FROM wine-steamcmd-ubuntu:latest
+FROM melle2/wine-steamcmd-ubuntu:latest
 
 ARG UUID=7100
 
