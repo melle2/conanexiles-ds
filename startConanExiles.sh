@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+MODLIST="${GAME_DIR}/steamapps/workshop/appworkshop_440900.acf"
 
 _terminate() {
   echo "Caught TERM signal!"
@@ -42,11 +43,17 @@ fi
 if [[ ${GAME_MOD_IDS} =~ ^[0-9,]+$ ]]; then
   for mod_id in ${GAME_MOD_IDS//,/ }
   do
+    if [ -f "${MODLIST}" ] && grep -q "${mod_id}" "${MODLIST}"; then
+      echo "Mod ${mod_id} already installed, skipping."
+      continue
+    fi
     echo "Adding Mod ${mod_id}."
     MODS_CMD="${MODS_CMD} +workshop_download_item ${APP_ID_MODS} ${mod_id}"
   done
-  echo "Installing Mod(s)."
-  steamcmd +force_install_dir "${GAME_DIR}" +login anonymous @sSteamCmdForcePlatformType windows "${MODS_CMD}" +quit
+  if [ -n "${MODS_CMD}" ]; then
+    echo "Installing Mod(s)."
+    steamcmd +force_install_dir "${GAME_DIR}" +login anonymous @sSteamCmdForcePlatformType windows "${MODS_CMD}" +quit
+  fi
 fi
 
 trap _terminate HUP INT QUIT TERM SIGTERM
