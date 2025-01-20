@@ -24,8 +24,10 @@ folder `/conanexiles_config`.
 Internally the Configuration folder is then linked into the game folder, and you can decide if you only want to mount
 the config folder or additionally the game folder as well. In case you want to mount both, you can set up something like
 this:
-`/srv/data/conanexiles/game` --> mounted to `/conanexiles` (not needed)
-`/srv/data/conanexiles/config` --> mounted to `/conanexiles_config` (you should, you might lose your world otherwise)
+`/srv/data/conanexiles/game` --> mounted to `/conanexiles` (not necessary, but you can. It saves you time, so that you
+don't need to download the game data after recreation of the container)
+`/srv/data/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you might lose your world
+otherwise)
 With this it is mandatory to define the `GAME_INSTANCE_NAME` environment variable, otherwise this setup doesn't work.
 This concept gives you full control about your configuration files and backups of your world and config , in my view, is
 easier.
@@ -105,8 +107,8 @@ If you see improvements, feel free to contribute and create a PR.
 
 ## DISCLAIMER!!
 
-I've tested the image/setup on my VPS. On the environment everything worked as expected. Not only a completely new game,
-but I was even able to start my old game which some time had been created from the implementation by alinmear
-at https://github.com/alinmear/docker-conanexiles. But as this project is not maintained anymore I've created my own
-Docker image.
+I've tested the image/setup on my VPS. On this environment everything worked as expected. Not only a completely new
+game, but I was even able to start my old game which at some time back had been created based on the implementation by
+alinmear at https://github.com/alinmear/docker-conanexiles. But as this project is not maintained anymore I've created
+my own Docker image.
 However, as I don't know each and every setup, it could be that something is not working as expected.
