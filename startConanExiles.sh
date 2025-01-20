@@ -59,5 +59,8 @@ fi
 trap _terminate HUP INT QUIT TERM SIGTERM
 
 /etc/init.d/xvfb start
-wine ConanSandboxServer.exe --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" "${SERVER_ADDITIONAL_PARAMETER}" -nosteamclient -game -server -log
+wine ConanSandboxServer.exe --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" \
+    "${SERVER_ADDITIONAL_PARAMETER}" -nosteamclient -game -server -log &
+tail -f "${CONFIG_DIR}/Saved/Logs/ConanSandbox.log" &
+
 wait
