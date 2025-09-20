@@ -18,26 +18,23 @@ your host and being executed.
 
 ### Volume
 
-Within the image, ConanExiles Dedicated Server is installed to folder `/conanexiles`. The folder structure is set up in
-the way that the pure game files resist in folder `/conanexiles` and your world database and configuration files in the
-folder `/conanexiles_config`.
-Internally the Configuration folder is then linked into the game folder, and you can decide if you only want to mount
-the config folder or additionally the game folder as well. In case you want to mount both, you can set up something like
-this:
+Within the image, ConanExiles Dedicated Server is installed to folder `/conanexiles`. The folder structure is organized with the main game files in `/conanexiles` and your world database and configuration files in `/conanexiles_config`.
+The configuration folder is internally linked to the game folder. This setup lets you choose whether to mount only the config folder or both the config and game folders. If you want to mount both, you can set it up like this:
+
 `/srv/data/conanexiles/game` --> mounted to `/conanexiles` (not necessary, but you can. It saves you time, so that you
 don't need to download the game data after recreation of the container)
-`/srv/data/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you might lose your world
+
+`/srv/data/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you will lose your world
 otherwise)
-With this it is mandatory to define the `GAME_INSTANCE_NAME` environment variable, otherwise this setup doesn't work.
-This concept gives you full control about your configuration files and backups of your world and config , in my view, is
-easier.
+
+The `GAME_INSTANCE_NAME` environment variable is required to use this setup. Without it, the configuration will not work.
+This approach gives you complete control over your configuration files and backups of your game world. I believe it's a much easier way to manage things.
 
 ### Ports
 
-If your ports are already blocked by another game, you can change the Conan Exiles Configuration within int ini files in
-your config folder.
-Consult the official documentation of the Conan Exiles' properties for more information.
-Keep in mind, if you start the game from your local network, you have to open the respective ports in your router!
+If another game is already using the required ports, you can modify the Conan Exiles configuration files in your config folder.
+For more information on Conan Exiles' properties, please consult the official documentation.
+Keep in mind that if you are playing from your local network, you will need to open the corresponding ports in your router.
 
 ### Environment variables
 
@@ -51,7 +48,7 @@ specific environment variables so that you don't need to touch the .ini files.
 | GAME_SERVER_PASSWORD        |                                                        Set the game password to login into the server.                                                        |             - |        no |
 | GAME_MOD_IDS                | Comma separated list of mod is which are being installed before server start. In any case you must configure them by yourself in the ini files, if necessary! |             - |        no |
 | GAME_UPDATE                 |                              With this parameter you are able to update the game to the latest available version before startup                               |         false |        no |
-| SERVER_ADDITIONAL_PARAMETER |           To give you more control for the command line, you can pass additional game parameter, i.e. for multi server setup (I never tried this).            |             - |        no |
+| SERVER_ADDITIONAL_PARAMETER |           To give you more control about the command line, you can pass additional game parameter, i.e. for multi server setup (I've never tried that).            |             - |        no |
 
 ### Docker
 
@@ -103,7 +100,7 @@ Docker Image is available at https://hub.docker.com/repository/docker/melle2/con
 
 ### Improvements
 
-If you see improvements, feel free to contribute and create a PR.
+If you have any suggestions for improvements, please feel free to contribute and create a pull request (PR).
 
 ## DISCLAIMER!!
 
