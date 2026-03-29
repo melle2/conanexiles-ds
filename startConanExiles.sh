@@ -1,27 +1,39 @@
 #!/bin/bash
 set -e
 MODLIST="${GAME_DIR}/steamapps/workshop/appworkshop_440900.acf"
+CONFIG_DIR=/conanexiles_config
 
 _terminate() {
   echo "Caught TERM signal!"
   echo "Stopping Conan Exiles"
   wineserver -k -w
   /etc/init.d/xvfb stop
+  echo "Conan Exiles stopped"
+  exit 0
 }
+
+trap _terminate HUP INT QUIT TERM SIGTERM
+
+steamcmd +login anonymous +@sSteamCmdForcePlatformType windows +quit
 
 if [ -z "${GAME_INSTANCE_NAME}" ]; then
   echo "Please define GAME_INSTANCE_NAME game variable to give your instance a name."
   exit 1
 fi
 
+if [ ! -d "${WINEPREFIX}" ]; then
+  echo "Wine not initialized, starting wineboot."
+  wine wineboot -i && wineserver -w
+fi
+
 DOWNLOAD_TYPE="update"
-if [ ! -d "${GAME_DIR}/.wine" ]; then
-  echo "First time start, init wineboot."
+if [ ! -d "${GAME_DIR}/steamapps" ]; then
+  echo "Game not installed."
   DOWNLOAD_TYPE="download"
   GAME_UPDATE=true
 fi
 
-if [ "$GAME_UPDATE" = true ]; then
+if [ "${GAME_UPDATE}" = true ]; then
   echo "Start game ${DOWNLOAD_TYPE}..."
   steamcmd +force_install_dir "${GAME_DIR}" +login anonymous +@sSteamCmdForcePlatformType windows +app_update "${APP_ID}" validate +quit
   echo "Game ${DOWNLOAD_TYPE} done."
@@ -40,6 +52,11 @@ if [ -n "${GAME_SERVER_PASSWORD}" ]; then
   SERVER_PASSWORD_PARAM="-ServerPassword=${GAME_SERVER_PASSWORD}"
 fi
 
+if [ "${GAME_UPDATE_MODS}" = true ]; then
+  rm -rf "${GAME_DIR}/steamapps/workshop"
+  echo "Deleted existing mods."
+fi
+
 if [[ ${GAME_MOD_IDS} =~ ^[0-9,]+$ ]]; then
   for mod_id in ${GAME_MOD_IDS//,/ }
   do
@@ -48,19 +65,21 @@ if [[ ${GAME_MOD_IDS} =~ ^[0-9,]+$ ]]; then
       continue
     fi
     echo "Adding Mod ${mod_id}."
-    MODS_CMD="${MODS_CMD} +workshop_download_item ${APP_ID_MODS} ${mod_id}"
+    MODS_CMD="${MODS_CMD}+workshop_download_item ${APP_ID_MODS} ${mod_id} "
   done
   if [ -n "${MODS_CMD}" ]; then
     echo "Installing Mod(s)."
-    steamcmd +force_install_dir "${GAME_DIR}" +login anonymous @sSteamCmdForcePlatformType windows "${MODS_CMD}" +quit
+    steamcmd +force_install_dir "${GAME_DIR}" +login anonymous +@sSteamCmdForcePlatformType windows ${MODS_CMD}+quit
   fi
 fi
-
-trap _terminate HUP INT QUIT TERM SIGTERM
 
 /etc/init.d/xvfb start
 wine ConanSandboxServer.exe --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" \
     "${SERVER_ADDITIONAL_PARAMETER}" -nosteamclient -game -server -log &
+WINE_PID=$!
+
+sleep 10
 tail -f "${CONFIG_DIR}/Saved/Logs/ConanSandbox.log" &
 
-wait
+wait "$WINE_PID"
+
