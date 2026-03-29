@@ -5,7 +5,7 @@ your host and being executed.
 
 ## What you should know
 
-1. This image is based on another "basic image" (wine-steamcmd-ubuntu), which I've created to not only use it for Conan
+1. This image is based on another "basic image" (wine-steamcmd-ubuntu), which I've created not only for Conan
    Exiles, but also for all other kind of Windows based dedicated game servers.
 2. You should have a basic understanding how to deal with Docker and Linux. All documentation is based on a Linux
    environment. However, it is possible to run this also in a Windows environment if you install Docker/K8s.
@@ -21,10 +21,10 @@ your host and being executed.
 Within the image, ConanExiles Dedicated Server is installed to folder `/conanexiles`. The folder structure is organized with the main game files in `/conanexiles` and your world database and configuration files in `/conanexiles_config`.
 The configuration folder is internally linked to the game folder. This setup lets you choose whether to mount only the config folder or both the config and game folders. If you want to mount both, you can set it up like this:
 
-`/srv/data/conanexiles/game` --> mounted to `/conanexiles` (not necessary, but you can. It saves you time, so that you
+`/srv/conanexiles/game` --> mounted to `/conanexiles` (not necessary, but you can. It saves you time, so that you
 don't need to download the game data after recreation of the container)
 
-`/srv/data/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you will lose your world
+`/srv/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you will lose your world
 otherwise)
 
 The `GAME_INSTANCE_NAME` environment variable is required to use this setup. Without it, the configuration will not work.
@@ -48,7 +48,7 @@ specific environment variables so that you don't need to touch the .ini files.
 | GAME_SERVER_PASSWORD        |                                                        Set the game password to login into the server.                                                        |             - |        no |
 | GAME_MOD_IDS                | Comma separated list of mod is which are being installed before server start. In any case you must configure them by yourself in the ini files, if necessary! |             - |        no |
 | GAME_UPDATE                 |                              With this parameter you are able to update the game to the latest available version before startup                               |         false |        no |
-| SERVER_ADDITIONAL_PARAMETER |           To give you more control about the command line, you can pass additional game parameter, i.e. for multi server setup (I've never tried that).            |             - |        no |
+| SERVER_ADDITIONAL_PARAMETER |         To provide more control about the command line, you can pass additional game parameter, i.e. for multi server setup (I've never tried that).          |             - |        no |
 
 ### Docker
 
@@ -98,6 +98,10 @@ services:
 Docker Image is available at https://hub.docker.com/repository/docker/melle2/conanexiles-ds.
 `docker pull melle2/conanexiles-ds`
 
+### Github
+
+The source code is available at https://github.com/melle2/conanexiles-ds
+
 ### Improvements
 
 If you have any suggestions for improvements, please feel free to contribute and create a pull request (PR).
@@ -108,4 +112,4 @@ I've tested the image/setup on my VPS. On this environment everything worked as 
 game, but I was even able to start my old game which at some time back had been created based on the implementation by
 alinmear at https://github.com/alinmear/docker-conanexiles. But as this project is not maintained anymore I've created
 my own Docker image.
-However, as I don't know each and every setup, it could be that something is not working as expected.
+However, as I don't know each and every setup, it could happen that something is not working as expected.
