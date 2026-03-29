@@ -5,7 +5,7 @@ your host and being executed.
 
 ## What you should know
 
-1. This image is based on another "basic image" (wine-steamcmd-ubuntu), which I've created to not only use it for Conan
+1. This image is based on another "basic image" (wine-steamcmd-ubuntu), which I've created to not only for Conan
    Exiles, but also for all other kind of Windows based dedicated game servers.
 2. You should have a basic understanding how to deal with Docker and Linux. All documentation is based on a Linux
    environment. However, it is possible to run this also in a Windows environment if you install Docker/K8s.
@@ -18,19 +18,19 @@ your host and being executed.
 
 ### Volume
 
-Within the image, ConanExiles Dedicated Server is installed to folder `/conanexiles`. The folder structure is set up in
-the way that the pure game files resist in folder `/conanexiles` and your world database and configuration files in the
+Within the image, ConanExiles Dedicated Server is installed to folder `/conanexiles`. The folder structure is set up 
+that all the game files resist in folder `/conanexiles` and your world database and configuration files in the
 folder `/conanexiles_config`.
-Internally the Configuration folder is then linked into the game folder, and you can decide if you only want to mount
+Internally the Configuration folder is (soft)linked into the game folder, and you can decide if you only want to mount
 the config folder or additionally the game folder as well. In case you want to mount both, you can set up something like
 this:
-`/srv/data/conanexiles/game` --> mounted to `/conanexiles` (not necessary, but you can. It saves you time, so that you
-don't need to download the game data after recreation of the container)
-`/srv/data/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you might lose your world
+`/srv/conanexiles/game` --> mounted to `/conanexiles` (not necessary, but you can. It saves time, so that you
+don't need to download the full game data after recreation of the container)
+`/srv/conanexiles/config` --> mounted to `/conanexiles_config` (you definitely should, you might lose your world
 otherwise)
-With this it is mandatory to define the `GAME_INSTANCE_NAME` environment variable, otherwise this setup doesn't work.
-This concept gives you full control about your configuration files and backups of your world and config , in my view, is
-easier.
+It is mandatory to define the `GAME_INSTANCE_NAME` environment variable, otherwise this setup doesn't work.
+This concept gives you full control about your configuration files and backups of your world and config. In my view,
+it's easier to handle.
 
 ### Ports
 
