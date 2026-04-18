@@ -41,14 +41,15 @@ Keep in mind that if you are playing from your local network, you will need to o
 The only mandatory requirement is to pass the `GAME_INSTANCE_NAME` variable. Additionally, you can set some more
 specific environment variables so that you don't need to touch the .ini files.
 
-| Parameter name              |                                                                          Description                                                                          | Default value | Mandatory |
-|:----------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|--------------:|----------:|
-| GAME_INSTANCE_NAME          |                              Sets the instance name of the dedicated sever, which is being passed as a `userdir` for the server                               |             - |       yes |
-| GAME_SERVER_NAME            |                              Set the server name. With this name you can find your server in the online server list in the game                               |             - |        no |
-| GAME_SERVER_PASSWORD        |                                                        Set the game password to login into the server.                                                        |             - |        no |
-| GAME_MOD_IDS                | Comma separated list of mod is which are being installed before server start. In any case you must configure them by yourself in the ini files, if necessary! |             - |        no |
-| GAME_UPDATE                 |                              With this parameter you are able to update the game to the latest available version before startup                               |         false |        no |
-| SERVER_ADDITIONAL_PARAMETER |         To provide more control about the command line, you can pass additional game parameter, i.e. for multi server setup (I've never tried that).          |             - |        no |
+| Parameter name              |                                                                                                    Description                                                                                                     | Default value | Mandatory |
+|:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|--------------:|----------:|
+| GAME_INSTANCE_NAME          |                                                         Sets the instance name of the dedicated sever, which is being passed as a `userdir` for the server                                                         |             - |       yes |
+| GAME_SERVER_NAME            |                                                         Set the server name. With this name you can find your server in the online server list in the game                                                         |             - |        no |
+| GAME_SERVER_PASSWORD        |                                                                                  Set the game password to login into the server.                                                                                   |             - |        no |
+| GAME_MOD_IDS                |                           Comma separated list of mod is which are being installed before server start. In any case you must configure them by yourself in the ini files, if necessary!                            |             - |        no |
+| GAME_UPDATE                 |                                                         With this parameter you are able to update the game to the latest available version before startup                                                         |         false |        no |
+| GAME_UPDATE_MODS            | This variable allows you to update mods when starting the server, by deleting the **whole** content within the mod dir. Be cautious as it can lead to issues if a mod is deleted and cannot be downloaded anymore. |         false |        no |
+| SERVER_ADDITIONAL_PARAMETER |                                    To provide more control about the command line, you can pass additional game parameter, i.e. for multi server setup (I've never tried that).                                    |             - |        no |
 
 ### Docker
 
@@ -83,6 +84,7 @@ services:
       GAME_SERVER_PASSWORD: <password>
       GAME_MOD_IDS: <11111,22222,33333>
       GAME_UPDATE: <true/false>
+      GAME_UPDATE_MODS: <true/false>
       SERVER_ADDITIONAL_PARAMETER: <additional_parameter>
     ports:
         - 7777:7777/udp
