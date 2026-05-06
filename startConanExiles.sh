@@ -74,7 +74,7 @@ if [[ ${GAME_MOD_IDS} =~ ^[0-9,]+$ ]]; then
 fi
 
 /etc/init.d/xvfb start
-wine ConanSandboxServer.exe --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" \
+wine ConanSandbox/Binaries/Win64/ConanSandboxServer-Win64-Shipping.exe --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" \
     "${SERVER_ADDITIONAL_PARAMETER}" -nosteamclient -game -server -log &
 WINE_PID=$!
 
