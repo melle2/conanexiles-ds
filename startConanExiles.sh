@@ -2,6 +2,7 @@
 set -e
 MODLIST="${GAME_DIR}/steamapps/workshop/appworkshop_440900.acf"
 CONFIG_DIR=/conanexiles_config
+CONAN_BINARY=ConanSandboxServer.exe
 
 _terminate() {
   echo "Caught TERM signal!"
@@ -73,8 +74,13 @@ if [[ ${GAME_MOD_IDS} =~ ^[0-9,]+$ ]]; then
   fi
 fi
 
+if [ "${GAME_UE5}" = true ]; then
+  echo "Starting UE5 version"
+  CONAN_BINARY=ConanSandbox/Binaries/Win64/ConanSandboxServer-Win64-Shipping.exe
+fi
+
 /etc/init.d/xvfb start
-wine ConanSandboxServer.exe --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" \
+wine ${CONAN_BINARY} --userdir="${GAME_INSTANCE_NAME}" "${SERVER_NAME_PARAM}" "${SERVER_PASSWORD_PARAM}" \
     "${SERVER_ADDITIONAL_PARAMETER}" -nosteamclient -game -server -log &
 WINE_PID=$!
 
@@ -82,4 +88,3 @@ sleep 10
 tail -f "${CONFIG_DIR}/Saved/Logs/ConanSandbox.log" &
 
 wait "$WINE_PID"
-

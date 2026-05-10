@@ -36,6 +36,12 @@ If another game is already using the required ports, you can modify the Conan Ex
 For more information on Conan Exiles' properties, please consult the official documentation.
 Keep in mind that if you are playing from your local network, you will need to open the corresponding ports in your router.
 
+### Unreal Engine 5 update
+
+With the new UE5 version of the game, the executable ``ConanSandboxServer.exe`` doesn't work anymore. A new ``GAME_UE5``
+variable has been introduced, so that server admins can decide if they want to stay with the UE4 version of the game
+or change to UE5.    
+
 ### Environment variables
 
 The only mandatory requirement is to pass the `GAME_INSTANCE_NAME` variable. Additionally, you can set some more
@@ -49,6 +55,7 @@ specific environment variables so that you don't need to touch the .ini files.
 | GAME_MOD_IDS                |                           Comma separated list of mod is which are being installed before server start. In any case you must configure them by yourself in the ini files, if necessary!                            |             - |        no |
 | GAME_UPDATE                 |                                                         With this parameter you are able to update the game to the latest available version before startup                                                         |         false |        no |
 | GAME_UPDATE_MODS            | This variable allows you to update mods when starting the server, by deleting the **whole** content within the mod dir. Be cautious as it can lead to issues if a mod is deleted and cannot be downloaded anymore. |         false |        no |
+| GAME_UE5                    |                                                                              Starting the server with the Unreal Engine 5 executable.                                                                              |         false |        no |
 | SERVER_ADDITIONAL_PARAMETER |                                    To provide more control about the command line, you can pass additional game parameter, i.e. for multi server setup (I've never tried that).                                    |             - |        no |
 
 ### Docker

@@ -1,4 +1,4 @@
-FROM melle2/wine-steamcmd-ubuntu:24.04-3
+FROM melle2/wine-steamcmd-ubuntu:24.04-4
 
 ARG USER_ID=7100
 ARG GROUP_ID=7100
@@ -12,7 +12,7 @@ ENV HOME_DIR=/home/${USER_NAME} \
 ENV WINEPREFIX=${GAME_DIR}/.wine
 
 
-RUN apt update && apt dist-upgrade -y && apt install -y winbind && \
+RUN apt update && apt dist-upgrade -y && apt install -y winbind --no-install-recommends && \
     groupadd -g ${GROUP_ID} ${USER_NAME} && useradd -u ${USER_ID} -g ${GROUP_ID} -m ${USER_NAME} &&  \
     mkdir ${CONFIG_DIR} "${HOME_DIR}/.steam"
 
