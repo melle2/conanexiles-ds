@@ -42,7 +42,7 @@ With the new UE5 version of the game, the executable ``ConanSandboxServer.exe`` 
 variable has been introduced, so that server admins can decide if they want to stay with the UE4 version of the game
 or change to UE5.
 
-**Note:** If you enable UE5, ensure you check the [Troubleshooting](#troubleshooting) section regarding configuration file changes, as the engine migration may require manual adjustments to your `Engine.ini`.
+**Note:** If you enable UE5, ensure you check the [Troubleshooting](https://exiles-enhanced.inflexion.io/servers/troubleshooting/) section regarding configuration file changes, as the engine migration may require manual adjustments to your `Engine.ini`.
 
 ### Environment variables
 
