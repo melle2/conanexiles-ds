@@ -40,7 +40,9 @@ Keep in mind that if you are playing from your local network, you will need to o
 
 With the new UE5 version of the game, the executable ``ConanSandboxServer.exe`` doesn't work anymore. A new ``GAME_UE5``
 variable has been introduced, so that server admins can decide if they want to stay with the UE4 version of the game
-or change to UE5.    
+or change to UE5.
+
+**Note:** If you enable UE5, ensure you check the [Troubleshooting](#troubleshooting) section regarding configuration file changes, as the engine migration may require manual adjustments to your `Engine.ini`.
 
 ### Environment variables
 
